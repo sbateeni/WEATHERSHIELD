@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "weather-shield-ai",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "API_KEY": "@api_key"
+  }
+}

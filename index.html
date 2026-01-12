@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>درع الطقس - غرفة العمليات الاستراتيجية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+      body {
+        font-family: 'Tajawal', sans-serif;
+        background-color: #020617;
+        color: #f8fafc;
+        margin: 0;
+        overflow-x: hidden;
+      }
+      .leaflet-container {
+        background: #000000 !important;
+      }
+      .leaflet-tile-pane {
+        /* تعديل الفلتر ليكون أقل حدة من النمط الداكن السابق ليناسب الـ Satellite */
+        filter: brightness(0.9) contrast(1.1);
+        transition: filter 0.5s ease;
+      }
+      .custom-div-icon {
+        background: none !important;
+        border: none !important;
+      }
+      /* تحسين التمرير */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #020617; }
+      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
