@@ -7,8 +7,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "env": {
-    "API_KEY": "@api_key"
-  }
+  ]
 }
