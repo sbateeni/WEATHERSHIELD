@@ -3,12 +3,23 @@ import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { WeatherData, AlertSeverity } from "../types";
 import { RawWeatherData } from "./weatherApiService";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const getApiKey = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('GEMINI_API_KEY') || process.env.GEMINI_API_KEY || process.env.API_KEY;
+  }
+  return process.env.GEMINI_API_KEY || process.env.API_KEY;
+};
+
+const getAI = () => {
+  const key = getApiKey();
+  if (!key) throw new Error('Missing Gemini API key. Set it in Settings or as an environment variable.');
+  return new GoogleGenAI({ apiKey: key });
+};
 
 export const resolveLocationCoords = async (query: string): Promise<{ lat: number, lng: number, name: string }> => {
   const prompt = `حول الموقع التالي إلى إحداثيات واسم رسمي بالعربية: "${query}". أجب بتنسيق JSON فقط.`;
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
       config: {
@@ -44,7 +55,7 @@ export const fetchLiveWeatherData = async (lat: number, lng: number, rawData: Ra
   أجب بتنسيق JSON حصراً وباللغة العربية.`;
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
       config: {
@@ -117,7 +128,7 @@ export const fetchLiveWeatherData = async (lat: number, lng: number, rawData: Ra
 
 export const generateVoiceAlert = async (text: string): Promise<string | null> => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getAI().models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text: `تنبيه أمني عاجل: ${text}` }] }],
       config: {

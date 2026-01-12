@@ -6,8 +6,9 @@ import { saveLocation, getSavedLocation } from './services/dbService';
 import { WeatherData, LocationState, AlertSeverity } from './types';
 import LiveMap from './components/LiveMap';
 import AlarmSystem from './components/AlarmSystem';
+import Settings from './components/Settings';
 
-type TabType = 'home' | 'agent' | 'maps' | 'alerts';
+type TabType = 'home' | 'agent' | 'maps' | 'alerts' | 'settings';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('home');
@@ -118,6 +119,7 @@ const App: React.FC = () => {
            <button onClick={() => setIsAlarmMuted(!isAlarmMuted)} className={`px-6 py-3 rounded-full font-black text-[10px] border transition-all ${isAlarmMuted ? 'bg-red-600 border-red-400 shadow-lg' : 'bg-slate-950 border-slate-800 text-slate-500'}`}>
              {isAlarmMuted ? 'إنذار صامت' : 'إنذار نشط'}
            </button>
+           <button onClick={() => setActiveTab('settings')} className="px-4 py-3 rounded-full bg-slate-800 text-slate-200 font-black text-[10px]">⚙️ إعدادات</button>
         </div>
       </header>
 
@@ -252,6 +254,12 @@ const App: React.FC = () => {
                    </div>
                 </div>
              </div>
+          </div>
+        )}
+
+        {activeTab === 'settings' && (
+          <div className="max-w-4xl mx-auto mt-6">
+            <Settings />
           </div>
         )}
       </main>
